@@ -1,13 +1,13 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include "model.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 Model::Model(const char *filename) : verts_(), faces_() {
   std::ifstream in;
-  in.open (filename, std::ifstream::in);
+  in.open(filename, std::ifstream::in);
   if (in.fail()) {
     return;
   }
@@ -32,8 +32,8 @@ Model::Model(const char *filename) : verts_(), faces_() {
       std::vector<int> f;
       int slashPos = idx.find_first_of('/');
       if (slashPos != std::string::npos) {
-				// Going to assume that if we find a '/' character in line that
-				// we have a face with notation 'f 111/222/333'
+        // Going to assume that if we find a '/' character in line that
+        // we have a face with notation 'f 111/222/333'
         f.push_back(std::stoi(idx.substr(0, slashPos)) - 1);
         while (iss >> idx) {
           slashPos = idx.find_first_of('/');
@@ -48,24 +48,16 @@ Model::Model(const char *filename) : verts_(), faces_() {
       faces_.push_back(f);
     }
   }
-  std::cerr << "#vertices: " << verts_.size() << " #faces: "  << faces_.size() << std::endl;
+  std::cerr << "#vertices: " << verts_.size() << " #faces: " << faces_.size()
+            << std::endl;
 }
 
-Model::~Model() {
-}
+Model::~Model() {}
 
-int Model::nverts() {
-  return verts_.size();
-}
+int Model::nverts() { return verts_.size(); }
 
-int Model::nfaces() {
-  return faces_.size();
-}
+int Model::nfaces() { return faces_.size(); }
 
-std::vector<int> Model::face(int idx) {
-  return faces_[idx];
-}
+std::vector<int> Model::face(int idx) { return faces_[idx]; }
 
-Vec3f Model::vert(int i) {
-  return verts_[i];
-}
+Vec3f Model::vert(int i) { return verts_[i]; }
